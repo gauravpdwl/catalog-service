@@ -1,5 +1,5 @@
 server:
-  port: 8080
-  host: localhost
+    port: 8080
+    host: localhost
 database:
-  url:  mongodb://localhost:27017/catalog?authSource=admin&w=1
+    url: mongodb://localhost:27017/catalog?authSource=admin&w=1
