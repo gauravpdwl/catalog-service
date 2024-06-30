@@ -13,10 +13,10 @@ module.exports = {
     },
     root: true,
     rules: {
-        "no-console": "error",
+        "no-console": "off",
         "dot-notation": "error",
         "@typescript-eslint/require-await": "off",
         "@typescript-eslint/no-misused-promises": "off",
-        "@typescript-eslint/unbound-method":"off"
+        "@typescript-eslint/unbound-method": "off",
     },
 };
