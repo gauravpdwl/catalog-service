@@ -6,7 +6,7 @@ import logger from "../config/logger";
 import { asyncWrapper } from "../common/utils/wrapper";
 import authenticate from "../common/middlewares/authenticate";
 import { canAccess } from "../common/middlewares/canAccess";
-import { Roles } from "../common/constants/index";
+import { Roles } from "../common/constants";
 
 const router = express.Router();
 
@@ -20,5 +20,8 @@ router.post(
     categoryValidator,
     asyncWrapper(categoryController.create),
 );
+
+router.get("/", asyncWrapper(categoryController.index));
+router.get("/:categoryId", asyncWrapper(categoryController.getOne));
 
 export default router;
