@@ -3,3 +3,5 @@ server:
     host: localhost
 database:
     url: mongodb://localhost:27017/catalog?authSource=admin&w=1
+auth:
+    jwksUri: http://localhost:8000/.well-known/jwks.json
