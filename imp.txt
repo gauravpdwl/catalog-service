@@ -1,0 +1,4 @@
+// since we are passing data through postman in multipart form data 
+// we are using this middleware which converts multipart encoded data
+import fileUpload from "express-fileupload";
+// we are adding "fileUpload" in router as middleware 
