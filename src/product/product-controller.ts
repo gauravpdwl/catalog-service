@@ -82,8 +82,8 @@ export class ProductController {
 
         if ((req as AuthRequest).auth.role !== Roles.ADMIN) {
             const tenant = (req as AuthRequest).auth.tenant;
-            console.log("tenant auth id - ", tenant);
-            console.log("product tenant id - ", product.tenantId);
+            // console.log("tenant auth id - ", tenant);
+            // console.log("product tenant id - ", product.tenantId);
             if (product.tenantId !== String(tenant)) {
                 return next(
                     createHttpError(
@@ -171,6 +171,24 @@ export class ProductController {
             },
         );
 
-        res.json(products);
+        const finalProducts = (products.data as Product[]).map(
+            (product: Product) => {
+                return {
+                    ...product,
+                    image: this.storage.getObjectUri(product.image),
+                };
+            },
+        );
+
+        // console.log(products);
+
+        res.json({
+            data: finalProducts,
+            total: products.total,
+            pageSize: products.pageSize,
+            currentPage: products.currentPage,
+        });
+
+        // res.json(products);
     };
 }
