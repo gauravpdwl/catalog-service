@@ -191,4 +191,28 @@ export class ProductController {
 
         // res.json(products);
     };
+
+    single = async (req: Request, res: Response) => {
+        const { id } = req.params;
+
+        const product = await this.productService.getProduct(id);
+
+        let updatedProduct;
+
+        if (product) {
+            const productimage = this.storage.getObjectUri(product.image);
+            updatedProduct = product;
+            updatedProduct.image = productimage;
+        }
+
+        // console.log(updatedProduct);
+
+        if (updatedProduct) {
+            // Check if product exists before using it
+            res.json(updatedProduct);
+        } else {
+            // Handle the case where product is null (e.g., send a 404)
+            res.status(404).send("Product not found");
+        }
+    };
 }
