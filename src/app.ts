@@ -3,9 +3,13 @@ import { globalErrorHandler } from "./common/middlewares/globalErrorHandler";
 import categoryRouter from "./category/category-router";
 import productsRouter from "./product/product-router";
 import cookieParser from "cookie-parser";
+import toppingRouter from "./topping/topping-router";
+import cors from "cors";
 
 const app = express();
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
@@ -15,6 +19,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/categories", categoryRouter);
 app.use("/products", productsRouter);
+app.use("/toppings", toppingRouter);
 
 app.use(globalErrorHandler);
 
