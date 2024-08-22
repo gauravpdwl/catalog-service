@@ -11,6 +11,7 @@ import { Roles } from "../common/constants";
 import { Filter, Product } from "./product-types";
 import mongoose from "mongoose";
 import { MessageProducerBroker } from "../common/types/broker";
+import { mapToObject } from "../utils";
 
 export class ProductController {
     constructor(
@@ -70,7 +71,12 @@ export class ProductController {
             "product",
             JSON.stringify({
                 id: newProduct._id,
-                priceConfiguration: newProduct.priceConfiguration,
+                priceConfiguration: mapToObject(
+                    newProduct.priceConfiguration as unknown as Map<
+                        string,
+                        unknown
+                    >,
+                ),
             }),
         );
 
@@ -157,7 +163,12 @@ export class ProductController {
             "product",
             JSON.stringify({
                 id: updatedProduct._id,
-                priceConfiguration: updatedProduct.priceConfiguration,
+                priceConfiguration: mapToObject(
+                    updatedProduct.priceConfiguration as unknown as Map<
+                        string,
+                        unknown
+                    >,
+                ),
             }),
         );
 
