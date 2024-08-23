@@ -32,6 +32,7 @@ export class KafkaProducerBroker implements MessageProducerBroker {
      * @throws {Error} - When the producer is not connected
      */
     async sendMessage(topic: string, message: string) {
+        console.log("coming inside sendMessage");
         await this.producer.send({
             topic,
             messages: [{ value: message }],
