@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { UploadedFile } from "express-fileupload";
 import { AuthRequest } from "../common/types";
 import { Roles } from "../common/constants";
-import { Filter, Product } from "./product-types";
+import { Filter, Product, ProductEvents } from "./product-types";
 import mongoose from "mongoose";
 import { MessageProducerBroker } from "../common/types/broker";
 import { mapToObject } from "../utils";
@@ -70,13 +70,18 @@ export class ProductController {
         await this.broker.sendMessage(
             "product",
             JSON.stringify({
-                id: newProduct._id,
-                priceConfiguration: mapToObject(
-                    newProduct.priceConfiguration as unknown as Map<
-                        string,
-                        unknown
-                    >,
-                ),
+                event_type: ProductEvents.PRODUCT_CREATE,
+                data: {
+                    id: newProduct._id,
+                    // todo: fix the typescript error
+                    priceConfiguration: mapToObject(
+                        newProduct.priceConfiguration as unknown as Map<
+                            string,
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            any
+                        >,
+                    ),
+                },
             }),
         );
 
@@ -162,13 +167,17 @@ export class ProductController {
         await this.broker.sendMessage(
             "product",
             JSON.stringify({
-                id: updatedProduct._id,
-                priceConfiguration: mapToObject(
-                    updatedProduct.priceConfiguration as unknown as Map<
-                        string,
-                        unknown
-                    >,
-                ),
+                event_type: ProductEvents.PRODUCT_UPDATE,
+                data: {
+                    id: updatedProduct._id,
+                    priceConfiguration: mapToObject(
+                        updatedProduct.priceConfiguration as unknown as Map<
+                            string,
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            any
+                        >,
+                    ),
+                },
             }),
         );
 
